@@ -16,7 +16,7 @@ class NoteSaveMiddleware(
         container: Container<AddEditNoteAction, AddEditNoteState, AddEditNoteSideEffect>
     ) {
         when(action) {
-            AddEditNoteAction.SaveNote -> {
+            is AddEditNoteAction.SaveNote -> {
                 val note = Note(
                     title = currentState.noteTitle,
                     content = currentState.noteContent,
@@ -25,7 +25,12 @@ class NoteSaveMiddleware(
                     id = currentState.currentNoteid
                 )
                 try {
-                    noteUseCases.addNote(note)
+                    if(action.updateOrNot) {
+                        noteUseCases.updateNote(note)
+                    }else{
+                        noteUseCases.addNote(note)
+                    }
+
                     container.emitSideEffect(AddEditNoteSideEffect.SaveNote)
                 } catch (e: InvalidNoteException){
                     container.emitSideEffect(AddEditNoteSideEffect.ShowSnackbar(

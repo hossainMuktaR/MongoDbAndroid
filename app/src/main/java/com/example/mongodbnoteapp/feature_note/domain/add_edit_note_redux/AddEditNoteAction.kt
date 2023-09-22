@@ -10,7 +10,7 @@ sealed class AddEditNoteAction: Action{
     data class ContentChanged(val value: String): AddEditNoteAction()
     data class ContentFocusChanged(val focusState: FocusState,val contentValue: String ): AddEditNoteAction()
     data class ColorChanged(val color: Int): AddEditNoteAction()
-    object SaveNote: AddEditNoteAction()
+    data class SaveNote(val updateOrNot: Boolean): AddEditNoteAction()
     data class FetchNoteById(val noteId: Int): AddEditNoteAction()
     data class FetchNoteComplated(val note: Note): AddEditNoteAction()
 }

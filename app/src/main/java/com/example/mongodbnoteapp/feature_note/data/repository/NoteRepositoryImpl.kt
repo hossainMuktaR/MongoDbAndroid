@@ -11,8 +11,10 @@ class NoteRepositoryImpl(
 
     override suspend fun getNoteById(id: Int): Note? = noteDao.getNoteById(id)
 
-    override suspend fun insertNote(note: Note) = noteDao.insertNote(note)
+    override suspend fun insertNote(note: Note) = noteDao.insertNote(note.toNoteDto())
 
-    override suspend fun deleteNote(note: Note) = noteDao.deleteNote(note)
+    override suspend fun updateNote(note: Note) = noteDao.updateNote(note.toNoteDto())
+
+    override suspend fun deleteNote(note: Note) = noteDao.deleteNote(note.toNoteDto())
 
 }

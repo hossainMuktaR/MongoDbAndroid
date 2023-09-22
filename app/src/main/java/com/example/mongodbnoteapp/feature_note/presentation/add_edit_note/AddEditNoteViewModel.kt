@@ -25,11 +25,13 @@ class AddEditNoteViewModel @Inject constructor(
     val state: StateFlow<AddEditNoteState> = container.state
     val sideEffect: SharedFlow<AddEditNoteSideEffect> = container.sideEffect
 
+    var updateOrNot = false
 
     init {
         savedStateHandle.get<Int>("noteId")?.let { noteId ->
             if (noteId != -1) {
                 fetchNoteById(noteId)
+                updateOrNot = true
             }
         }
     }
@@ -58,7 +60,7 @@ class AddEditNoteViewModel @Inject constructor(
     }
 
     fun saveNote() = intent {
-        dispatch(AddEditNoteAction.SaveNote)
+        dispatch(AddEditNoteAction.SaveNote(updateOrNot))
     }
 
     private fun intent(transform: suspend Container<AddEditNoteAction, AddEditNoteState, AddEditNoteSideEffect>.() -> Unit) {

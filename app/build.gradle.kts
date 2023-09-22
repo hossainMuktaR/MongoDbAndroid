@@ -32,12 +32,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
@@ -75,15 +76,8 @@ dependencies {
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.android.compiler)
 
-    // Room
-//    implementation(libs.room.runtime)
-//    ksp(libs.room.compiler)
-
     // mongodb
     implementation(libs.realm.library.base)
-
-    // Kotlin Extensions and Coroutines support for Room
-//    implementation(libs.room.ktx)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
