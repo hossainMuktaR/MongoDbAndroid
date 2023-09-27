@@ -77,9 +77,13 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     // mongodb
-    implementation(libs.realm.library.base)
+    implementation(libs.realm.library.sync)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
+    //play-services-auth
+    implementation(libs.playServices.auth)
+
 }

@@ -15,6 +15,7 @@ data class Note(
     val content: String,
     val timeStamp: Long,
     val color: Int,
+    val userId: String,
     val id: Int? = null
 ){
     companion object {
@@ -26,6 +27,7 @@ data class Note(
             title = title,
             content = content,
             color = color,
+            userId = userId
         )
     }
 }

@@ -1,14 +1,39 @@
 package com.example.mongodbnoteapp.feature_note.data.data_source
 
 import android.util.Log
+import com.example.mongodbnoteapp.feature_note.Utils.Constants.APP_ID
 import com.example.mongodbnoteapp.feature_note.data.NoteDto
 import com.example.mongodbnoteapp.feature_note.domain.model.Note
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
+import io.realm.kotlin.log.LogLevel
+import io.realm.kotlin.mongodb.App
+import io.realm.kotlin.mongodb.sync.SyncConfiguration
 
-class MongoDaoImpl(
-    private val realm: Realm
-): NoteDao {
+class MongoDaoImpl() : NoteDao {
+    private val app = App.create(APP_ID)
+    private val user = app.currentUser
+    private lateinit var realm: Realm
+
+    init {
+        configureRealm()
+    }
+
+    private fun configureRealm() {
+        if (user != null) {
+            val config = SyncConfiguration.Builder(
+                user,
+                setOf(NoteDto::class)
+            ).initialSubscriptions { sub ->
+                add(
+                    query = sub.query<NoteDto>(query = "userId == $0", user.id),
+                    "userId Subscription"
+                )
+            }.log(LogLevel.ALL).build()
+            realm = Realm.open(config)
+        }
+    }
+
     override suspend fun getAllNotes(): List<Note> {
         return realm.query<NoteDto>().find().map { it.toNote() }
     }

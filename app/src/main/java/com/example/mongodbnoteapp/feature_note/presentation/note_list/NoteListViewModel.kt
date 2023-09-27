@@ -19,9 +19,10 @@ import javax.inject.Inject
 class NoteListViewModel @Inject constructor(
     useCases: NoteUseCases
 ) : ViewModel() {
-    private val container = NoteListContainer(useCases)
+    private val container = NoteListContainer(useCases,viewModelScope)
     val state: StateFlow<NoteListState> = container.state
     val sideEffect: SharedFlow<NoteListSideEffect> = container.sideEffect
+
 
     fun toggleOrderSection() = intent {
         dispatch(NoteListAction.ToggleOrderSection)

@@ -1,6 +1,8 @@
 package com.example.mongodbnoteapp.feature_note.data
 
+import com.example.mongodbnoteapp.feature_note.Utils.Constants.APP_ID
 import com.example.mongodbnoteapp.feature_note.domain.model.Note
+import io.realm.kotlin.mongodb.App
 import io.realm.kotlin.types.RealmInstant
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
@@ -9,7 +11,9 @@ import kotlin.random.Random
 
 class NoteDto(): RealmObject {
     @PrimaryKey
-    var noteId: Int = Random.nextInt()
+    var _id = ObjectId.invoke()
+    var userId = App.create(APP_ID).currentUser!!.id
+    var noteId: Int? = null
     var title: String = ""
     var content: String = ""
     var timeStamp: RealmInstant = RealmInstant.now()
@@ -19,12 +23,14 @@ class NoteDto(): RealmObject {
         noteId: Int,
         title: String,
         content: String,
-        color: Int
+        color: Int,
+        userId: String
     ) : this() {
         this.noteId= noteId
         this.title = title
         this.content = content
         this.color = color
+        this.userId = userId
     }
     fun toNote(): Note{
         return Note(
@@ -32,7 +38,8 @@ class NoteDto(): RealmObject {
             title = title,
             content = content,
             timeStamp = timeStamp.epochSeconds,
-            color = color
+            color = color,
+            userId = userId
         )
     }
 }

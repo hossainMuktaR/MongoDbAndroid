@@ -23,24 +23,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NoteModule {
-
     @Provides
     @Singleton
-    fun provideNoteDatabase(app: Application): Realm {
-        val config = RealmConfiguration.Builder(
-            schema = setOf(
-                NoteDto::class
-            )
-        )
-            .compactOnLaunch()
-            .build()
-        return Realm.open(config)
-    }
-
-    @Provides
-    @Singleton
-    fun provideNoteDao(realm: Realm): NoteDao {
-        return MongoDaoImpl(realm)
+    fun provideNoteDao(): NoteDao {
+        return MongoDaoImpl()
     }
 
     @Provides

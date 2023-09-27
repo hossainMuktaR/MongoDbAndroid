@@ -21,7 +21,7 @@ class AddEditNoteViewModel @Inject constructor(
     noteUseCases: NoteUseCases
 ) : ViewModel() {
 
-    private val container = AddEditNoteContainer(noteUseCases)
+    private val container = AddEditNoteContainer(noteUseCases,viewModelScope)
     val state: StateFlow<AddEditNoteState> = container.state
     val sideEffect: SharedFlow<AddEditNoteSideEffect> = container.sideEffect
 

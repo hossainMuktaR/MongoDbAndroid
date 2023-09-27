@@ -20,6 +20,7 @@ kotlin-ksp = "1.9.0-1.0.12"
 hilt-lifecycle-viewmodel = "1.0.0-alpha03"
 #for mongodb project
 realm_versoin = "1.11.0"
+android-gsm = "20.7.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -51,6 +52,9 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines-core" }
 #for mongodb project
 realm-library-base = { module = "io.realm.kotlin:library-base", version.ref = "realm_versoin" }
+realm-library-sync = { module = "io.realm.kotlin:library-sync", version.ref = "realm_versoin" }
+playServices-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "android-gsm" }
+
 
 
 

@@ -1,5 +1,6 @@
 package com.example.mongodbnoteapp.feature_note.redux
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 
 open class BaseContainer<A: Action, S: State, SE: SideEffect>(
     initialState: S,
+    override val scope: CoroutineScope,
     private val reducer: Reducer<A, S>,
     private val middleware: List<Middleware<A, S, SE>> = emptyList()
 ): Container<A, S, SE> {
@@ -16,6 +18,7 @@ open class BaseContainer<A: Action, S: State, SE: SideEffect>(
 
     private val _sideEffect = MutableSharedFlow<SE>()
     override val sideEffect: SharedFlow<SE> = _sideEffect.asSharedFlow()
+
     private val currentState: S
         get() = _state.value
 
