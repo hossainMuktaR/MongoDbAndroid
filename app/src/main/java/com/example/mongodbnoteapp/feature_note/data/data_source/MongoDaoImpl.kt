@@ -29,7 +29,10 @@ class MongoDaoImpl() : NoteDao {
                     query = sub.query<NoteDto>(query = "userId == $0", user.id),
                     "userId Subscription"
                 )
-            }.log(LogLevel.ALL).build()
+            }
+                .waitForInitialRemoteData()
+                .log(LogLevel.ALL)
+                .build()
             realm = Realm.open(config)
         }
     }
